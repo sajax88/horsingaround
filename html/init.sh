@@ -9,4 +9,5 @@ composer install
 php /var/www/html/cli.php init
 
 # Install crontab
-crontab cron.jobs
+crontab < cron.jobs
+service cron start

@@ -76,6 +76,7 @@ class TelegramNotificationService implements InjectionAwareInterface, Notificati
                 if (isset($result["ok"]) && $result["ok"]) {
                     $this->logSuccess($result["result"]["message_id"], $data);
                 } else {
+                    // TODO: collect, resend
                     $this->logError($result["description"] ?? "Unknown error", $data);
                 }
             }

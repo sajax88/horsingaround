@@ -7,11 +7,10 @@ use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Application;
 
 function setupDI(): void {
-    $diContainer = new FactoryDefault();
-
     $rootPath = realpath('..');
     require_once $rootPath . '/vendor/autoload.php';
 
+    $diContainer = new FactoryDefault();
     $diContainer->offsetSet('rootPath', function () use ($rootPath) {
         return $rootPath;
     });

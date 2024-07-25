@@ -1,1 +1,1 @@
-* * * * * /usr/local/bin/php /var/www/html/cli.php notifications
+* * * * * /usr/local/bin/php /var/www/html/cli.php notifications > /var/log/cron.log

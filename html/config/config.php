@@ -3,20 +3,24 @@ declare(strict_types=1);
 
 use Phalcon\Config\Config;
 
+$loader = (new josegonzalez\Dotenv\Loader(__DIR__ . '/../.env'))
+    ->parse()
+    ->toEnv(true);
+
 return new Config([
     'database'    => [
         'adapter'  => 'Mysql',
-        'host'     => getenv('DB_HOST'),
-        'username' => getenv('DB_USERNAME'),
-        'password' => getenv('DB_PASSWORD'),
-        'dbname'   => getenv('DB_NAME'),
-        'port'     => getenv('DB_PORT'),
+        'host'     => $_ENV['DB_HOST'],
+        'username' => $_ENV['DB_USERNAME'],
+        'password' => $_ENV['DB_PASSWORD'],
+        'dbname'   => $_ENV['DB_NAME'],
+        'port'     => $_ENV['DB_PORT'],
     ],
     'redis'       => [
-        'host'  => getenv('REDIS_HOST'),
-        'port'  => getenv('REDIS_PORT'),
-        'common_index' => getenv('REDIS_COMMON_INDEX'),
-        'session_index' => getenv('REDIS_SESSION_INDEX'),
+        'host'  => $_ENV['REDIS_HOST'],
+        'port'  => $_ENV['REDIS_PORT'],
+        'common_index' => $_ENV['REDIS_COMMON_INDEX'],
+        'session_index' => $_ENV['REDIS_SESSION_INDEX'],
     ],
     'application' => [
         'logInDb'              => true,
@@ -25,10 +29,10 @@ return new Config([
         'exportDataFromTables' => [],
     ],
     'telegram'    => [
-        'api_url'          => getenv('TG_API_URL'),
-        'admin_tg_chat_id' => getenv('TG_ADMIN_CHAT_ID'),
+        'api_url'          => $_ENV['TG_API_URL'],
+        'admin_tg_chat_id' => $_ENV['TG_ADMIN_CHAT_ID'],
     ],
-    'environment' => getenv('ENVIRONMENT'),
-    'base_url' => getenv('BASE_URL'),
-    'jwt_passphrase' => getenv('JWT_PASS'),
+    'environment' => $_ENV['ENVIRONMENT'],
+    'base_url' => $_ENV['BASE_URL'],
+    'jwt_passphrase' => $_ENV['JWT_PASS'],
 ]);

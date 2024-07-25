@@ -8,7 +8,7 @@ use Phalcon\Di\FactoryDefault\Cli as CliDI;
 use Phalcon\Di\ServiceProviderInterface;
 
 
-$rootPath = realpath('.');
+$rootPath = __DIR__;
 require_once $rootPath . '/vendor/autoload.php';
 
 $container  = new CliDI();
@@ -40,4 +40,9 @@ foreach ($argv as $k => $arg) {
     }
 }
 
-$console->handle($arguments);
+try {
+    $console->handle($arguments);
+} catch (\Throwable $e) {
+    fwrite(STDERR, $e->getMessage() . PHP_EOL);
+    exit(1);
+}
