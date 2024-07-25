@@ -1,0 +1,63 @@
+services:
+  hostaway_nginx:
+    container_name: hostaway_nginx
+    image: nginx:1.27.0
+    ports:
+      - "8000:80"
+    depends_on:
+      - hostaway_be
+    volumes:
+      - ./html/web:/var/www/html/web
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - hostaway
+
+  hostaway_be:
+    container_name: hostaway_be
+    image: hostaway_be
+    restart: always
+    env_file: ".env"
+    build:
+      context: ./
+      args:
+        PHALCON_VERSION: 5.8.0
+    volumes:
+      - ./html:/var/www/html
+    ports:
+      - "9000:9000"
+    depends_on:
+      - hostaway_db
+      - hostaway_redis
+    networks:
+      - hostaway
+
+  hostaway_db:
+    image: mariadb:11.4.2
+    container_name: hostaway_db
+    restart: always
+    env_file: ".env"
+    volumes:
+      - hostaway_mariadb:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - hostaway
+
+  hostaway_redis:
+    image: redis:7.2.5
+    container_name: hostaway_redis
+    restart: always
+    volumes:
+      - hostaway_redis:/data
+    ports:
+      - "6381:6379"
+    networks:
+      - hostaway
+
+volumes:
+  hostaway_mariadb:
+  hostaway_redis:
+
+networks:
+  hostaway:

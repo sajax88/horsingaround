@@ -1,0 +1,6 @@
+.idea
+.env
+html/.env
+html/logs
+html/vendor
+html/cache
